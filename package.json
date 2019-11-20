@@ -1,0 +1,38 @@
+{
+  "name": "@roit/roit-response-handler",
+  "version": "0.0.9",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "repository": "github:roitinnovation/roit-response-handler",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "npm run build && npm test && npm publish --access public --scope=roit",
+    "test": "mocha --timeout 15000 -r ts-node/register test/**/*.spec.ts"
+  },
+  "author": "ROIT",
+  "devDependencies": {
+    "@types/express": "^4.0.33",
+    "@types/chai": "^4.2.0",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^6.0.46",
+    "typescript": "^2.9.2",
+    "ts-node": "^8.3.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "express": "^4.17.1",
+    "reflect-metadata": "^0.1.13"
+  },
+  "keywords": [
+    "typescript response api",
+    "typescript exception handle",
+    "typescript error handle",
+    "typescript error api",
+    "express response api",
+    "express exception handle",
+    "express error handle",
+    "express error api"
+  ]
+}
