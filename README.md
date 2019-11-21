@@ -88,9 +88,42 @@ private async example(req: ModelMapperRequest, res: Response) {...
 import { OkResponse, ErrorResponse } from "@roit/roit-response-handler"
 
 // Error
+// Signature -> (message: string, erros?: Array<any>, token?: string)
 res.status(403).send(ErrorResponse("Auth invalid, verify your credentials!"));
 
 // Success
+// Signature -> (data: any, message?: string, token?: string)
 res.send(OkResponse({}))
 
+```
+
+##Response Format
+
+```
+SUCCESS
+Content-Type: application/json
+
+{
+	"status": "SUCCESS",
+	"message": "User successfully created.",
+	"data": { ... },
+	"errors": null
+}
+```
+
+```
+ERROR
+Content-Type: application/json
+
+{
+	"status": "ERROR",
+	"message": "Error in create user.",
+	"data": null,
+	"errors": [
+		{
+			"code": XXX,
+			"message": "Error in execute request!"
+		}
+	]
+}
 ```
