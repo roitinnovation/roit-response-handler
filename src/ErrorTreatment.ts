@@ -1,22 +1,24 @@
-import { Request, Response, NextFunction } from "express";
-import * as chalk from "chalk"
-import { ErrorResponse } from "./ErrorResponse";
+import { Request, Response, NextFunction } from 'express'
+import * as chalk from 'chalk'
 
+import { ErrorResponse } from './ErrorResponse'
 
 export class ErrorTreatment {
 
-    private static instance: ErrorTreatment = new ErrorTreatment
+    private static instance: ErrorTreatment = new ErrorTreatment()
 
-    private handlersMap: Map<string, Function> = new Map
+    private handlersMap: Map<string, Function> = new Map()
 
     private handlerDefault: Function
 
-    logMissingConfigurationError: boolean = false
+    logMissingConfigurationError = false
 
     private constructor() {
-        this.handlerDefault = (err: Error, req: Request, res: Response) => {
+        this.handlerDefault = (err: Error, _: Request, res: Response) => {
             console.error(chalk.red(err.stack))
-            res.status(500).send(ErrorResponse("An unexpected error occurred during an execution"))
+            const message = 'An unexpected error occurred during an execution'
+
+            res.status(500).send(ErrorResponse(message))
         }
     }
 
@@ -24,8 +26,8 @@ export class ErrorTreatment {
         return this.instance
     }
 
-    static register(name: string, callBack: Function, defaultHandle: boolean = false) {
-        if(defaultHandle) {
+    static register(name: string, callBack: Function, defaultHandle = false) {
+        if (defaultHandle) {
             this.instance.handlerDefault = callBack
         } else {
             this.instance.handlersMap.set(name, callBack)
@@ -40,12 +42,17 @@ export class ErrorTreatment {
         return this.instance.handlersMap
     }
 
-    static executeHandler(err: any, req: Request, res: Response, next: NextFunction) {
-
+    static executeHandler(
+        err: any,
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
         const callBack = this.instance.handlersMap.get(err.constructor.name)
 
-        if(!callBack) {
+        if (!callBack) {
             this.instance.handlerDefault(err, req, res, next)
+
             return
         }
 
@@ -55,4 +62,6 @@ export class ErrorTreatment {
     static countRegister(): number {
         return this.instance.handlersMap.size
     }
+
 }
+
