@@ -1,33 +1,50 @@
 
 export class ResponseModel {
-    
+
     status: string
-
-    errors: Array<any>
-
-    data: Date = null
-
+    errors: any[]
+    data: Date
     message: string
-
     token: string
-
     timestamp: number = new Date().getTime()
 
-    static buildSuccess(data: any, message: string, token: string): ResponseModel {
-        const res = new ResponseModel
-        res.status = "SUCCESS"
+    static buildSuccess(
+        data: any,
+        message?: string,
+        token?: string
+    ): ResponseModel {
+        const res = new ResponseModel()
+        res.status = 'SUCCESS'
         res.data = data
-        res.message = message
-        res.token = token
+
+        if (message) {
+            res.message = message
+        }
+        if (token) {
+            res.token = token
+        }
+
         return res
     }
 
-    static buildError(message: string, erros: Array<any>, token: string): ResponseModel {
-        const res = new ResponseModel
-        res.status = "ERROR"
+    static buildError(
+        message: string,
+        errors?: any[],
+        token?: string
+    ): ResponseModel {
+        const res = new ResponseModel()
+        res.status = 'ERROR'
         res.message = message
-        res.errors = erros
-        res.token = token
+
+        if (errors) {
+            res.errors = errors
+        }
+        if (token) {
+            res.token = token
+        }
+
         return res
     }
+
 }
+

@@ -1,19 +1,31 @@
-import { Request, Response, NextFunction } from "express";
-import { ErrorTreatment } from "./ErrorTreatment";
+import { Request, Response, NextFunction } from 'express'
+
+import { ErrorTreatment } from './ErrorTreatment'
 
 export class Handle {
 
-    private static customHandlers: Array<any> = new Array
+    private static customHandlers: any[] = []
 
-    static register(customHandlers: any | Array<any>) {
-        this.customHandlers = this.customHandlers.concat( (Array.isArray(customHandlers) ? customHandlers : [ customHandlers ]) )
+    static register(customHandlers: any | any[]) {
+        const additionalHandlers = Array.isArray(customHandlers)
+            ? customHandlers
+            : [customHandlers]
+
+        this.customHandlers = this.customHandlers.concat(additionalHandlers)
     }
 
-    static middleware(err: any, req: Request, res: Response, next: NextFunction) {
+    static middleware(
+        err: any,
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
         ErrorTreatment.executeHandler(err, req, res, next)
     }
 
-    static asyncDispatcher = fn => (req, res, next) => {
-        fn(req, res).catch((error) => next(error));
-    };
+    static asyncDispatcher = (fn: Function) =>
+        (req: Request, res: Response, next: NextFunction) =>
+            fn(req, res).catch((error: Error) => next(error))
+
 }
+
