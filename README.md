@@ -80,6 +80,14 @@ private async example(req: ModelMapperRequest, res: Response) {...
 
 ```
 
+## Nest integration
+
+```typescript
+const app = await NestFactory.create(AppModule)
+app.useGlobalFilters(new HttpExceptionFilter())
+app.useGlobalInterceptors(new RoitResponseInterceptor())
+```
+
 
 ## Response models
 
@@ -97,9 +105,9 @@ res.send(OkResponse({}))
 
 ```
 
-##Response Format
+## Response Format
 
-```
+```json
 SUCCESS
 Content-Type: application/json
 
@@ -111,7 +119,7 @@ Content-Type: application/json
 }
 ```
 
-```
+```json
 ERROR
 Content-Type: application/json
 

@@ -34,7 +34,7 @@ export class ErrorTreatment {
         }
     }
 
-    static getByName(handleName: string): Function {
+    static getByName(handleName: string): Function | undefined {
         return this.instance.handlersMap.get(handleName)
     }
 

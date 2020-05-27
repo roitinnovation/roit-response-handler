@@ -13,7 +13,8 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitAny": true,
-        "strictPropertyInitialization": false
+        "strictPropertyInitialization": false,
+        "strictNullChecks": true
     },
     "include": [
         "src/**/*.ts"
