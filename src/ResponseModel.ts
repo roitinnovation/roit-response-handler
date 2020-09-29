@@ -3,7 +3,7 @@ export class ResponseModel {
 
     status: string
     errors: any[]
-    data: Date
+    data: any
     message: string
     token: string
     timestamp: number = new Date().getTime()
