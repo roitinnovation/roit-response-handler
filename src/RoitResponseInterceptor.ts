@@ -5,7 +5,8 @@ import {
     NestInterceptor
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, catchError } from 'rxjs/operators'
+import { ErrorResponse } from './ErrorResponse'
 
 import { OkResponse } from './OkResponse'
 
@@ -19,8 +20,10 @@ export class RoitResponseInterceptor implements NestInterceptor {
         return next
             .handle()
             .pipe(
-                map(data => OkResponse(data))
+                catchError(async (data: Error) => ErrorResponse(data?.message))
             )
+            .pipe(
+                map(data => OkResponse(data)))
     }
 
 }
