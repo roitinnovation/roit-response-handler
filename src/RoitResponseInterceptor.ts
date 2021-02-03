@@ -20,10 +20,12 @@ export class RoitResponseInterceptor implements NestInterceptor {
         return next
             .handle()
             .pipe(
-                catchError(async (data: Error) => ErrorResponse(data?.message))
+                map(data => OkResponse(data))
             )
             .pipe(
-                map(data => OkResponse(data)))
+                // eslint-disable-next-line
+                catchError(async (data: Error) => ErrorResponse(data?.message))
+            )
     }
 
 }
