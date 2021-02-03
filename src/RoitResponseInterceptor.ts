@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
-import { ErrorResponse } from './ErrorResponse'
 
+import { ErrorResponse } from './ErrorResponse'
 import { OkResponse } from './OkResponse'
 
 @Injectable()
@@ -24,7 +24,7 @@ export class RoitResponseInterceptor implements NestInterceptor {
             )
             .pipe(
                 // eslint-disable-next-line
-                catchError(async (data: Error) => ErrorResponse(data?.message))
+                catchError(async (data: Error) => ErrorResponse("An unexpected error occurred during an execution", Array.isArray(data?.message) ? data?.message : [data?.message]))
             )
     }
 
