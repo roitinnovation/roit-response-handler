@@ -2,7 +2,7 @@
 export class ResponseModel {
 
     status: string
-    errors: any[]
+    error: any
     data: any
     message: string
     token: string
@@ -14,7 +14,7 @@ export class ResponseModel {
         token?: string
     ): ResponseModel {
         const res = new ResponseModel()
-        res.status = 'SUCCESS'
+        res.status = 'success'
         res.data = data
 
         if (message) {
@@ -29,15 +29,15 @@ export class ResponseModel {
 
     static buildError(
         message: string,
-        errors?: any[],
+        error?: any,
         token?: string
     ): ResponseModel {
         const res = new ResponseModel()
-        res.status = 'ERROR'
+        res.status = 'failed'
         res.message = message
 
-        if (errors) {
-            res.errors = errors
+        if (error) {
+            res.error = error
         }
         if (token) {
             res.token = token
