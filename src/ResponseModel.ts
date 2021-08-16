@@ -19,6 +19,8 @@ export class ResponseModel {
 
         if (message) {
             res.message = message
+        } else {
+            res.message = 'Request received successfully'
         }
         if (token) {
             res.token = token
