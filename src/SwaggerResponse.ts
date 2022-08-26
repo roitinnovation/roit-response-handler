@@ -1,22 +1,23 @@
-import { applyDecorators } from '@nestjs/common'
-import { ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
+import { applyDecorators } from "@nestjs/common";
+import { ApiOkResponse, getSchemaPath } from "@nestjs/swagger";
 
-export const SwaggerResponse = (model: string | Function): any =>
-    applyDecorators(
-        ApiOkResponse({
-            schema: {
-                properties: {
-                    timestamp: {
-                        type: 'number'
-                    },
-                    status: {
-                        type: 'string'
-                    },
-                    message: {
-                        type: 'string'
-                    },
-                    data: { $ref: getSchemaPath(model) }
-                }
-            }
-        })
-    )
+export const SwaggerResponse = (model: string | Function): any => {
+  return applyDecorators(
+    ApiOkResponse({
+        schema: {
+          properties: {
+            timestamp: {
+                type: 'number'
+            },
+            status: {
+                type: 'string'
+            },
+            message: {
+                type: 'string'
+            },
+            data: { $ref: getSchemaPath(model) }
+          }
+        }
+      })
+  );
+};
