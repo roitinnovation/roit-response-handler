@@ -1,9 +1,18 @@
 import { applyDecorators } from '@nestjs/common'
-import { ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
+import { ApiExtraModels, ApiResponse, getSchemaPath } from '@nestjs/swagger'
 
-export const SwaggerResponse = (model: string | Function): MethodDecorator =>
+interface Props {
+    type: Function
+    statusCode?: number
+}
+
+export const SwaggerResponse = ({
+    type, statusCode
+}: Props): MethodDecorator =>
     applyDecorators(
-        ApiOkResponse({
+        ApiExtraModels(type),
+        ApiResponse({
+            status: statusCode || 200,
             schema: {
                 properties: {
                     timestamp: {
@@ -15,7 +24,7 @@ export const SwaggerResponse = (model: string | Function): MethodDecorator =>
                     message: {
                         type: 'string'
                     },
-                    data: { $ref: getSchemaPath(model) }
+                    data: { $ref: getSchemaPath(type) }
                 }
             }
         })
