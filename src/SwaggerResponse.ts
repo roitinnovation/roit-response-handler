@@ -4,12 +4,20 @@ import { ApiExtraModels, ApiResponse, getSchemaPath } from '@nestjs/swagger'
 interface Props {
     type: Function
     statusCode?: number
+    isArray?: boolean
 }
 
 export const SwaggerResponse = ({
-    type, statusCode
-}: Props): MethodDecorator =>
-    applyDecorators(
+    type, statusCode, isArray
+}: Props): MethodDecorator => {
+    const data = isArray ? {
+        type: 'array',
+        items: { $ref: getSchemaPath(type) }
+    } : {
+        $ref: getSchemaPath(type)
+    }
+
+    return applyDecorators(
         ApiExtraModels(type),
         ApiResponse({
             status: statusCode || 200,
@@ -24,8 +32,10 @@ export const SwaggerResponse = ({
                     message: {
                         type: 'string'
                     },
-                    data: { $ref: getSchemaPath(type) }
+                    data
                 }
             }
         })
     )
+}
+
