@@ -1,15 +1,20 @@
+export class ErrorObject {
+    code: number
+    message: string
+    metadata: unknown
+}
 
 export class ResponseModel {
 
     status: string
-    error: any
-    data: any
+    error: ErrorObject | unknown
+    data: unknown
     message: string
     token: string
     timestamp: number = new Date().getTime()
 
     static buildSuccess(
-        data: any,
+        data: unknown,
         message?: string,
         token?: string
     ): ResponseModel {
@@ -31,7 +36,7 @@ export class ResponseModel {
 
     static buildError(
         message: string,
-        error?: any,
+        error?: ErrorObject | unknown,
         token?: string
     ): ResponseModel {
         const res = new ResponseModel()
