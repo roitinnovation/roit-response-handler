@@ -1,6 +1,6 @@
 {
   "name": "@roit/roit-response-handler",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "main": "dist/index.js",
   "types": "src/index.ts",
   "repository": "github:roitinnovation/roit-response-handler",
